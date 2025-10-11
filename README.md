@@ -1,7 +1,7 @@
 # Discord AI Chatbot 🤖
 #### An Intelligent Discord AI Assistant with Personality!
 
-Created and maintained by **nghia** - A powerful Discord bot that brings AI conversation to your server with multiple personalities and advanced features.
+Created and maintained by **Tommy** - A powerful Discord bot that brings AI conversation to your server with multiple personalities and advanced features.
 
 ## 🌟 Key Features
 
