@@ -21,7 +21,7 @@ for filename in os.listdir(lang_directory):
 def load_current_language() -> dict:
     lang_file_path = os.path.join(
         lang_directory, f"lang.{current_language_code}.json")
-    with open(lang_file_path, encoding="utf-8") as lang_file:
+    with open(lang_file_path, encoding="utf-8-sig") as lang_file:
         current_language = json.load(lang_file)
     return current_language
 
@@ -40,6 +40,6 @@ def load_instructions() -> dict:
 
 def load_active_channels() -> dict:
     if os.path.exists("channels.json"):
-        with open("channels.json", "r", encoding='utf-8') as f:
+        with open("channels.json", "r", encoding='utf-8-sig') as f:
             active_channels = json.load(f)
     return active_channels
