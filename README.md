@@ -27,7 +27,7 @@ Created and maintained by **Tommy** - A powerful Discord bot that brings AI conv
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Dtn09/Discord-AI-Chatbot
+   git clone https://github.com/yourusername/Discord-AI-Chatbot
    cd Discord-AI-Chatbot
    ```
 
@@ -36,7 +36,14 @@ Created and maintained by **Tommy** - A powerful Discord bot that brings AI conv
    pip install -r requirements.txt
    ```
 
-3. **Configure environment**
+3. **Install DuckDuckGo Search (specific version)**
+   
+   Install version 5.3.1, which is a modern version that works correctly with this bot:
+   ```bash
+   python -m pip install duckduckgo-search==5.3.1
+   ```
+
+4. **Configure environment**
    - Rename `example.env` to `.env`
    - Add your Discord token and Groq API key:
    ```env
@@ -44,7 +51,7 @@ Created and maintained by **Tommy** - A powerful Discord bot that brings AI conv
    API_KEY=your_groq_api_key_here
    ```
 
-4. **Launch with persona selection**
+5. **Launch with persona selection**
    ```powershell
    # Windows PowerShell (Recommended)
    .\launch_bot.ps1
@@ -185,4 +192,4 @@ If you encounter any issues or have questions:
 
 ---
 
-**Created with ❤️ by Tommy**
+**Created with ❤️ by Tommy** | 
