@@ -316,54 +316,14 @@ async def generate_response_with_mcp(instructions: str, history: List[Dict[str, 
         # Use MCP-compatible model
         model = config.get('MODEL_ID', 'meta-llama/llama-4-maverick-17b-128e-instruct')
         
-        # Check if model supports tool calling
-        if any(model.startswith(prefix) for prefix in ["meta-llama/llama-4", "openai/gpt", "qwen/"]):
-            response = await mcp_client.client.chat.completions.create(
-                model=model,
-                messages=messages,
-                tools=all_tools,
-                tool_choice="auto",
-            )
-        else:
-            # Fallback for models that don't support tool calling
-            response = await mcp_client.client.chat.completions.create(
-                model=model,
-                messages=messages,
-            )
+        # Use standard completion without tools for Groq compatibility
+        # Groq models don't support tool calling properly, so we use simple approach
+        response = await mcp_client.client.chat.completions.create(
+            model=model,
+            messages=messages,
+        )
         
         response_message = response.choices[0].message
-        tool_calls = response_message.tool_calls
-        
-        if tool_calls:
-            messages.append(response_message)
-            
-            for tool_call in tool_calls:
-                function_name = tool_call.function.name
-                function_args = json.loads(tool_call.function.arguments)
-                
-                # Handle MCP tools
-                if function_name.endswith('_mcp'):
-                    function_response = await mcp_client.execute_tool(function_name, function_args)
-                elif function_name == "searchtool":
-                    # Handle existing search tool
-                    from bot_utilities.ai_utils import duckduckgotool
-                    function_response = await duckduckgotool(function_args.get("query"))
-                else:
-                    function_response = f"Unknown tool: {function_name}"
-                
-                messages.append({
-                    "tool_call_id": tool_call.id,
-                    "role": "tool",
-                    "name": function_name,
-                    "content": function_response,
-                })
-            
-            second_response = await mcp_client.client.chat.completions.create(
-                model=model,
-                messages=messages
-            )
-            return second_response.choices[0].message.content
-        
         return response_message.content
         
     except Exception as e:

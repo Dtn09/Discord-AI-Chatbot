@@ -209,7 +209,7 @@ async def generate_response(instructions, history):
     return response_message.content
 
 async def duckduckgotool(query) -> str:
-    if config['INTERNET_ACCESS']:
+    if not config['INTERNET_ACCESS']:
         return "internet access has been disabled by user"
     blob = ''
     results = await AsyncDDGS(proxy=None).text(query, max_results=6)
