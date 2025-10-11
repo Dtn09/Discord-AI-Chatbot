@@ -185,4 +185,4 @@ If you encounter any issues or have questions:
 
 ---
 
-**Created with ❤️ by nghia** | *Bringing AI conversations to Discord servers everywhere*
+**Created with ❤️ by Tommy** | *Bringing AI conversations to Discord*
