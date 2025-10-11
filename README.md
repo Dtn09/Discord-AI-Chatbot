@@ -27,7 +27,7 @@ Created and maintained by **Tommy** - A powerful Discord bot that brings AI conv
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/Discord-AI-Chatbot
+   git clone https://github.com/Dtn09/Discord-AI-Chatbot
    cd Discord-AI-Chatbot
    ```
 
