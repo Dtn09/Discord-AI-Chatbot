@@ -165,6 +165,54 @@ docker build -t discord-ai-chatbot .
 docker run -d --env-file .env discord-ai-chatbot
 ```
 
+## ☁️ Deploy to Render.com (Free 24/7 Hosting)
+
+### Quick Deploy
+1. **Fork/Push this repository to your GitHub**
+2. **Sign up at [Render.com](https://render.com)**
+3. **Create a New Background Worker**
+   - Click "New +" → "Background Worker"
+   - Connect your GitHub account
+   - Select your `Discord-AI-Chatbot` repository
+   - Choose branch: `clean-main`
+
+4. **Configure the Service**
+   - **Name:** `discord-ai-chatbot` (or your preferred name)
+   - **Environment:** Python 3
+   - **Region:** Oregon (or closest to you)
+   - **Branch:** `clean-main`
+   - **Build Command:** 
+     ```bash
+     pip install -r requirements.txt && python -m pip install duckduckgo-search==5.3.1
+     ```
+   - **Start Command:** 
+     ```bash
+     python main.py
+     ```
+
+5. **Add Environment Variables**
+   
+   Click "Advanced" → "Add Environment Variable" and add:
+   - `DISCORD_TOKEN` = `your_discord_bot_token`
+   - `API_KEY` = `your_groq_api_key`
+
+6. **Deploy!**
+   - Click "Create Background Worker"
+   - Render will automatically build and deploy your bot
+   - Your bot will run 24/7 for free!
+
+### Using render.yaml (Automated)
+This repository includes a `render.yaml` file for automatic configuration:
+1. In Render Dashboard, click "New +" → "Blueprint"
+2. Connect your repository
+3. Render will auto-detect the `render.yaml` and configure everything
+4. Just add your environment variables and deploy!
+
+### Notes
+- Free tier includes 750 hours/month (enough for 24/7)
+- Background workers stay online continuously
+- No need for keep-alive pings since it's not a web service
+
 ## 🤝 Contributing
 
 1. Fork the repository
