@@ -1,0 +1,10 @@
+aiohttp
+discord.py
+discord.py[voice]
+python-dotenv
+PyYAML
+Requests
+openai
+duckduckgo-search
+Pillow
+psutil
