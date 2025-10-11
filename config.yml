@@ -15,7 +15,10 @@ AI_NSFW_CONTENT_FILTER: true # Enable NSFW AI content filtering
 VISION_ENABLED: true # Enable image analysis capabilities
 VISION_MODEL: meta-llama/llama-4-maverick-17b-128e-instruct # Llama 4 Maverick - multimodal vision model
 
-
+# Text-to-Speech (TTS) Configuration
+TTS_ENABLED: true # Enable Google Cloud Text-to-Speech
+TTS_DEFAULT_VOICE: default # Default voice preset (default, male, female, british, aussie, etc.)
+TTS_MAX_LENGTH: 500 # Maximum text length for TTS (characters)
 
 # Model Context Protocol (MCP) Configuration
 MCP_ENABLED: true # Enable MCP for external system integration

@@ -89,6 +89,66 @@ LANGUAGE: en  # English (default)
    ```
 4. Use the launcher or restart the bot
 
+### 🔊 Text-to-Speech (TTS) Setup
+
+This bot includes Google Cloud Text-to-Speech with **4 million free characters/month**!
+
+#### Step 1: Create Google Cloud Account
+1. Go to [Google Cloud Console](https://console.cloud.google.com)
+2. Create a new project (or select existing)
+3. Enable the **Text-to-Speech API**:
+   - Go to "APIs & Services" → "Library"
+   - Search for "Cloud Text-to-Speech API"
+   - Click "Enable"
+
+#### Step 2: Create Service Account
+1. Go to "IAM & Admin" → "Service Accounts"
+2. Click "Create Service Account"
+3. Name it `discord-bot-tts` (or any name)
+4. Grant role: **"Cloud Text-to-Speech User"**
+5. Click "Done"
+
+#### Step 3: Generate Credentials
+1. Click on your new service account
+2. Go to "Keys" tab
+3. Click "Add Key" → "Create new key"
+4. Choose **JSON** format
+5. Download the JSON file
+
+#### Step 4: Configure Bot
+
+**For Local/PC:**
+1. Save the JSON file in your project folder
+2. Add to `.env`:
+   ```env
+   GOOGLE_APPLICATION_CREDENTIALS=path/to/your-credentials.json
+   ```
+
+**For Replit/Cloud:**
+1. Open the JSON file in a text editor
+2. Copy the entire JSON content
+3. Add to Secrets (🔒):
+   - **Key:** `GOOGLE_CLOUD_CREDENTIALS_JSON`
+   - **Value:** Paste the entire JSON content (as one line)
+
+#### Step 5: Test TTS
+Run your bot and try:
+```
+/tts text:Hello World voice:default
+/tts-voices
+```
+
+#### Available Voices
+- `default` - Standard English voice
+- `male` / `female` - Gender-specific voices
+- `british` / `aussie` - English accents
+- `french` / `german` / `spanish` / `japanese` - Other languages
+
+#### TTS Commands
+- `/tts text voice` - Basic TTS with preset voices
+- `/tts-custom` - Advanced TTS with custom speed/pitch
+- `/tts-voices` - List all available voice presets
+
 ### Advanced Settings
 ```yaml
 # Core Configuration
@@ -105,6 +165,9 @@ MCP_ENABLED: true          # Model Context Protocol features
 |---------|-------------|--------|
 | `/help` | Display all available commands | `/help` |
 | `/analyze-image` | Analyze uploaded images or URLs | `/analyze-image [url]` |
+| `/tts` | Convert text to speech | `/tts text:Hello voice:default` |
+| `/tts-voices` | List available TTS voice presets | `/tts-voices` |
+| `/tts-custom` | Custom TTS with speed/pitch control | `/tts-custom text:Hello language:en-US` |
 | `/toggleactive` | Enable/disable bot in current channel | `/toggleactive` |
 | `/mcp-tools` | Show available MCP tools | `/mcp-tools` |
 | `/mcp-test` | Test MCP functionality | `/mcp-test` |

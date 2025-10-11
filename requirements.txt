@@ -9,3 +9,4 @@ duckduckgo-search
 Pillow
 psutil
 Flask
+google-cloud-texttospeech
