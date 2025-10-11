@@ -130,10 +130,17 @@ class TTSManager:
             return []
 
 
-# Popular voice presets - WaveNet voices (better quality, 1M free characters/month)
+# Popular voice presets - WaveNet and Chirp voices
 VOICE_PRESETS = {
+    # Chirp 3 HD voices - German Male (Alnilam) as default
+    "default": {"language_code": "de-DE", "voice_name": "de-DE-Chirp3-HD-Alnilam", "is_wavenet": True},
+    "german": {"language_code": "de-DE", "voice_name": "de-DE-Chirp3-HD-Alnilam", "is_wavenet": True},
+    
+    # English Chirp 3 HD
+    "chirp": {"language_code": "en-US", "voice_name": "en-US-Chirp3-HD", "is_wavenet": True},
+    "english": {"language_code": "en-US", "voice_name": "en-US-Chirp3-HD", "is_wavenet": True},
+    
     # WaveNet voices (high quality, free tier: 1M characters/month)
-    "default": {"language_code": "en-US", "voice_name": "en-US-Wavenet-D", "is_wavenet": True},
     "male": {"language_code": "en-US", "voice_name": "en-US-Wavenet-B", "is_wavenet": True},
     "female": {"language_code": "en-US", "voice_name": "en-US-Wavenet-C", "is_wavenet": True},
     "british": {"language_code": "en-GB", "voice_name": "en-GB-Wavenet-B", "is_wavenet": True},
@@ -141,7 +148,6 @@ VOICE_PRESETS = {
     
     # International WaveNet voices
     "french": {"language_code": "fr-FR", "voice_name": "fr-FR-Wavenet-A", "is_wavenet": True},
-    "german": {"language_code": "de-DE", "voice_name": "de-DE-Wavenet-B", "is_wavenet": True},
     "spanish": {"language_code": "es-ES", "voice_name": "es-ES-Wavenet-B", "is_wavenet": True},
     "japanese": {"language_code": "ja-JP", "voice_name": "ja-JP-Wavenet-A", "is_wavenet": True},
     "korean": {"language_code": "ko-KR", "voice_name": "ko-KR-Wavenet-A", "is_wavenet": True},
