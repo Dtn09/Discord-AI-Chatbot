@@ -8,6 +8,7 @@ from discord import app_commands
 from discord.ext import commands
 import io
 from bot_utilities.tts_utils import tts_manager, VOICE_PRESETS
+from bot_utilities.tts_usage_tracker import usage_tracker
 
 
 class TTSCog(commands.Cog):
@@ -37,13 +38,20 @@ class TTSCog(commands.Cog):
             )
             return
         
+        # Get voice preset
+        voice_config = VOICE_PRESETS.get(voice.lower(), VOICE_PRESETS["default"])
+        is_wavenet = voice_config.get("is_wavenet", True)
+        
+        # Check usage limits BEFORE generating
+        can_use, reason = usage_tracker.can_use_tts(text, is_wavenet)
+        if not can_use:
+            await interaction.response.send_message(reason, ephemeral=True)
+            return
+        
         # Defer response as TTS might take a moment
         await interaction.response.defer()
         
         try:
-            # Get voice preset
-            voice_config = VOICE_PRESETS.get(voice.lower(), VOICE_PRESETS["default"])
-            
             # Generate speech
             audio_content = tts_manager.text_to_speech(
                 text=text,
@@ -55,11 +63,18 @@ class TTSCog(commands.Cog):
                 await interaction.followup.send("❌ Failed to generate speech. Please try again.")
                 return
             
+            # Track usage AFTER successful generation
+            usage_tracker.add_usage(text, is_wavenet)
+            
             # Create Discord file from audio bytes
             audio_file = discord.File(
                 io.BytesIO(audio_content),
                 filename=f"tts_{voice}.mp3"
             )
+            
+            # Get usage stats for footer
+            stats = usage_tracker.get_usage_stats()
+            usage_info = f"WaveNet: {stats['wavenet']['used']:,}/{stats['wavenet']['limit']:,} chars"
             
             # Send the audio file
             embed = discord.Embed(
@@ -68,7 +83,8 @@ class TTSCog(commands.Cog):
                 color=discord.Color.blue()
             )
             embed.add_field(name="Voice", value=voice.capitalize(), inline=True)
-            embed.set_footer(text=f"Requested by {interaction.user.display_name}")
+            embed.add_field(name="Characters", value=str(len(text)), inline=True)
+            embed.set_footer(text=f"Requested by {interaction.user.display_name} • {usage_info}")
             
             await interaction.followup.send(embed=embed, file=audio_file)
             
@@ -82,14 +98,15 @@ class TTSCog(commands.Cog):
         
         embed = discord.Embed(
             title="🎤 Available TTS Voices",
-            description="Use these voice presets with the `/tts` command",
+            description="Use these voice presets with the `/tts` command\n**All using WaveNet (high quality)**",
             color=discord.Color.green()
         )
         
         voices_info = {
             "English": ["default", "male", "female"],
             "Accents": ["british", "aussie"],
-            "Languages": ["french", "german", "spanish", "japanese"]
+            "Languages": ["french", "german", "spanish", "japanese", "korean"],
+            "Standard (Fallback)": ["standard"]
         }
         
         for category, voices in voices_info.items():
@@ -99,9 +116,76 @@ class TTSCog(commands.Cog):
                 inline=False
             )
         
+        # Add usage stats
+        stats = usage_tracker.get_usage_stats()
+        usage_text = (
+            f"**Monthly Usage ({stats['month']}):**\n"
+            f"WaveNet: {stats['wavenet']['used']:,}/{stats['wavenet']['limit']:,} chars "
+            f"({stats['wavenet']['percent']:.1f}%)\n"
+            f"Standard: {stats['standard']['used']:,}/{stats['standard']['limit']:,} chars "
+            f"({stats['standard']['percent']:.1f}%)"
+        )
+        embed.add_field(name="📊 Free Tier Status", value=usage_text, inline=False)
+        
         embed.set_footer(text="Example: /tts text:Hello World voice:british")
         
         await interaction.response.send_message(embed=embed, ephemeral=True)
+    
+    @app_commands.command(name="tts-usage", description="Check TTS usage statistics")
+    async def tts_usage(self, interaction: discord.Interaction):
+        """Display detailed TTS usage statistics"""
+        
+        stats = usage_tracker.get_usage_stats()
+        
+        embed = discord.Embed(
+            title="📊 TTS Usage Statistics",
+            description=f"**Month:** {stats['month']}",
+            color=discord.Color.blue()
+        )
+        
+        # WaveNet stats
+        wavenet = stats['wavenet']
+        wavenet_bar = self._create_progress_bar(wavenet['percent'])
+        embed.add_field(
+            name="🔊 WaveNet Voices (High Quality)",
+            value=(
+                f"Used: **{wavenet['used']:,}** / {wavenet['limit']:,} characters\n"
+                f"Remaining: **{wavenet['remaining']:,}** characters\n"
+                f"{wavenet_bar} {wavenet['percent']:.1f}%"
+            ),
+            inline=False
+        )
+        
+        # Standard stats
+        standard = stats['standard']
+        standard_bar = self._create_progress_bar(standard['percent'])
+        embed.add_field(
+            name="📢 Standard Voices",
+            value=(
+                f"Used: **{standard['used']:,}** / {standard['limit']:,} characters\n"
+                f"Remaining: **{standard['remaining']:,}** characters\n"
+                f"{standard_bar} {standard['percent']:.1f}%"
+            ),
+            inline=False
+        )
+        
+        # Warnings
+        if wavenet['percent'] > 80:
+            embed.add_field(
+                name="⚠️ Warning",
+                value="You've used over 80% of your WaveNet free tier!",
+                inline=False
+            )
+        
+        embed.set_footer(text="Usage resets on the 1st of each month")
+        
+        await interaction.response.send_message(embed=embed, ephemeral=True)
+    
+    def _create_progress_bar(self, percent: float, length: int = 10) -> str:
+        """Create a text progress bar"""
+        filled = int((percent / 100) * length)
+        bar = "█" * filled + "░" * (length - filled)
+        return f"`{bar}`"
     
     @app_commands.command(name="tts-custom", description="Convert text to speech with custom settings")
     @app_commands.describe(

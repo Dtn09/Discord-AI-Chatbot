@@ -130,17 +130,24 @@ class TTSManager:
             return []
 
 
-# Popular voice presets
+# Popular voice presets - WaveNet voices (better quality, 1M free characters/month)
 VOICE_PRESETS = {
-    "default": {"language_code": "en-US", "voice_name": "en-US-Neural2-J"},
-    "male": {"language_code": "en-US", "voice_name": "en-US-Neural2-D"},
-    "female": {"language_code": "en-US", "voice_name": "en-US-Neural2-F"},
-    "british": {"language_code": "en-GB", "voice_name": "en-GB-Neural2-B"},
-    "aussie": {"language_code": "en-AU", "voice_name": "en-AU-Neural2-A"},
-    "french": {"language_code": "fr-FR", "voice_name": "fr-FR-Neural2-A"},
-    "german": {"language_code": "de-DE", "voice_name": "de-DE-Neural2-B"},
-    "spanish": {"language_code": "es-ES", "voice_name": "es-ES-Neural2-A"},
-    "japanese": {"language_code": "ja-JP", "voice_name": "ja-JP-Neural2-B"},
+    # WaveNet voices (high quality, free tier: 1M characters/month)
+    "default": {"language_code": "en-US", "voice_name": "en-US-Wavenet-D", "is_wavenet": True},
+    "male": {"language_code": "en-US", "voice_name": "en-US-Wavenet-B", "is_wavenet": True},
+    "female": {"language_code": "en-US", "voice_name": "en-US-Wavenet-C", "is_wavenet": True},
+    "british": {"language_code": "en-GB", "voice_name": "en-GB-Wavenet-B", "is_wavenet": True},
+    "aussie": {"language_code": "en-AU", "voice_name": "en-AU-Wavenet-A", "is_wavenet": True},
+    
+    # International WaveNet voices
+    "french": {"language_code": "fr-FR", "voice_name": "fr-FR-Wavenet-A", "is_wavenet": True},
+    "german": {"language_code": "de-DE", "voice_name": "de-DE-Wavenet-B", "is_wavenet": True},
+    "spanish": {"language_code": "es-ES", "voice_name": "es-ES-Wavenet-B", "is_wavenet": True},
+    "japanese": {"language_code": "ja-JP", "voice_name": "ja-JP-Wavenet-A", "is_wavenet": True},
+    "korean": {"language_code": "ko-KR", "voice_name": "ko-KR-Wavenet-A", "is_wavenet": True},
+    
+    # Standard voices (backup option, 4M free characters/month)
+    "standard": {"language_code": "en-US", "voice_name": "en-US-Standard-D", "is_wavenet": False},
 }
 
 

@@ -139,15 +139,28 @@ Run your bot and try:
 ```
 
 #### Available Voices
-- `default` - Standard English voice
-- `male` / `female` - Gender-specific voices
+**WaveNet Voices (High Quality - 1M free characters/month):**
+
+- `default` / `male` / `female` - English WaveNet voices
 - `british` / `aussie` - English accents
-- `french` / `german` / `spanish` / `japanese` - Other languages
+- `french` / `german` / `spanish` / `japanese` / `korean` - International languages
+- `standard` - Fallback standard voice (4M free characters/month)
+
+**Usage Tracking:**
+- Built-in usage tracker ensures you never exceed free tier
+- Check usage with `/tts-usage` command
+- Automatic monthly reset
+- Warning alerts at 80% usage
+
+**Free Tier Limits:**
+- WaveNet voices: **1 million characters/month** (better quality)
+- Standard voices: **4 million characters/month** (basic quality)
 
 #### TTS Commands
-- `/tts text voice` - Basic TTS with preset voices
+- `/tts text voice` - Generate speech with voice presets
+- `/tts-voices` - List all available voices and view usage
+- `/tts-usage` - Check detailed usage statistics
 - `/tts-custom` - Advanced TTS with custom speed/pitch
-- `/tts-voices` - List all available voice presets
 
 ### Advanced Settings
 ```yaml
@@ -167,6 +180,7 @@ MCP_ENABLED: true          # Model Context Protocol features
 | `/analyze-image` | Analyze uploaded images or URLs | `/analyze-image [url]` |
 | `/tts` | Convert text to speech | `/tts text:Hello voice:default` |
 | `/tts-voices` | List available TTS voice presets | `/tts-voices` |
+| `/tts-usage` | Check TTS usage statistics | `/tts-usage` |
 | `/tts-custom` | Custom TTS with speed/pitch control | `/tts-custom text:Hello language:en-US` |
 | `/toggleactive` | Enable/disable bot in current channel | `/toggleactive` |
 | `/mcp-tools` | Show available MCP tools | `/mcp-tools` |
