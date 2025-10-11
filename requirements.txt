@@ -8,3 +8,4 @@ openai
 duckduckgo-search
 Pillow
 psutil
+Flask

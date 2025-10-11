@@ -165,53 +165,94 @@ docker build -t discord-ai-chatbot .
 docker run -d --env-file .env discord-ai-chatbot
 ```
 
-## ☁️ Deploy to Render.com (Free 24/7 Hosting)
+## ☁️ Free 24/7 Hosting on Replit
 
-### Quick Deploy
-1. **Fork/Push this repository to your GitHub**
-2. **Sign up at [Render.com](https://render.com)**
-3. **Create a New Background Worker**
-   - Click "New +" → "Background Worker"
-   - Connect your GitHub account
-   - Select your `Discord-AI-Chatbot` repository
-   - Choose branch: `clean-main`
+### Setup Guide (No Credit Card Required!)
 
-4. **Configure the Service**
-   - **Name:** `discord-ai-chatbot` (or your preferred name)
-   - **Environment:** Python 3
-   - **Region:** Oregon (or closest to you)
-   - **Branch:** `clean-main`
-   - **Build Command:** 
-     ```bash
-     pip install -r requirements.txt && python -m pip install duckduckgo-search==5.3.1
-     ```
-   - **Start Command:** 
-     ```bash
-     python main.py
-     ```
+#### Step 1: Import to Replit
 
-5. **Add Environment Variables**
-   
-   Click "Advanced" → "Add Environment Variable" and add:
-   - `DISCORD_TOKEN` = `your_discord_bot_token`
-   - `API_KEY` = `your_groq_api_key`
+1. **Go to [Replit.com](https://replit.com)** and sign up (free)
+2. Click **"Create Repl"**
+3. Select **"Import from GitHub"**
+4. Paste your repository URL: `https://github.com/Dtn09/Discord-AI-Chatbot`
+5. Click **"Import from GitHub"**
 
-6. **Deploy!**
-   - Click "Create Background Worker"
-   - Render will automatically build and deploy your bot
-   - Your bot will run 24/7 for free!
+#### Step 2: Configure Secrets (Environment Variables)
 
-### Using render.yaml (Automated)
-This repository includes a `render.yaml` file for automatic configuration:
-1. In Render Dashboard, click "New +" → "Blueprint"
-2. Connect your repository
-3. Render will auto-detect the `render.yaml` and configure everything
-4. Just add your environment variables and deploy!
+1. In your Repl, click the **🔒 Lock icon** (Secrets) in the left sidebar
+2. Add these secrets:
+   - **Key:** `DISCORD_TOKEN` → **Value:** `your_discord_bot_token`
+   - **Key:** `API_KEY` → **Value:** `your_groq_api_key`
+3. Click **"Add secret"** for each
 
-### Notes
-- Free tier includes 750 hours/month (enough for 24/7)
-- Background workers stay online continuously
-- No need for keep-alive pings since it's not a web service
+#### Step 3: Install Dependencies
+
+Replit should auto-install from `requirements.txt`. If not, click **"Shell"** and run:
+```bash
+pip install -r requirements.txt
+python -m pip install duckduckgo-search==5.3.1
+```
+
+#### Step 4: Run Your Bot
+
+1. Click the big **"Run"** button at the top
+2. Your bot should start and connect to Discord! 🎉
+3. You'll see a web view showing "Bot is alive!"
+
+#### Step 5: Keep Bot Online 24/7 with UptimeRobot
+
+Replit free tier sleeps after inactivity. Use UptimeRobot to keep it awake:
+
+1. **Copy your Repl URL** (from the webview, looks like `https://yourproject.yourname.repl.co`)
+2. **Go to [UptimeRobot.com](https://uptimerobot.com)** and sign up (free)
+3. Click **"Add New Monitor"**
+   - **Monitor Type:** HTTP(s)
+   - **Friendly Name:** Discord AI Chatbot
+   - **URL:** Your Repl URL
+   - **Monitoring Interval:** 5 minutes
+4. Click **"Create Monitor"**
+
+Your bot will now stay online 24/7! 🚀
+
+---
+
+### Troubleshooting
+
+**Bot keeps sleeping:**
+- Make sure UptimeRobot is pinging your Repl URL every 5 minutes
+- Verify the URL is correct (should show "Bot is alive!")
+
+**Bot won't start:**
+- Check Secrets are set correctly (DISCORD_TOKEN, API_KEY)
+- Look at the Console tab for error messages
+- Make sure all dependencies installed
+
+**Import errors:**
+- Click "Shell" and run: `pip install -r requirements.txt`
+
+---
+
+### Alternative Free Hosting Options
+
+<details>
+<summary>Click to see other free options</summary>
+
+#### Railway.app
+- $5 free credit/month (~500 hours)
+- GitHub integration
+- One-click deploy
+
+#### Glitch.com
+- No credit card needed
+- GitHub import
+- Simple interface
+
+#### Oracle Cloud Free Tier (Most Powerful)
+- Always free (not trial)
+- 2 VMs with 1GB RAM each
+- Requires credit card for verification
+
+</details>
 
 ## 🤝 Contributing
 

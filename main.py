@@ -10,6 +10,13 @@ from bot_utilities.config_loader import config
 
 load_dotenv('.env')
 
+# Keep-alive for Replit (comment out if not using Replit)
+try:
+    from keep_alive import keep_alive
+    keep_alive()
+except ImportError:
+    pass  # Not running on Replit, skip keep-alive
+
 class AIBot(commands.AutoShardedBot):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         if config['AUTO_SHARDING']:
