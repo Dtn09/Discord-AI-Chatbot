@@ -1,22 +1,22 @@
-# Discord AI Chatbot 🤖
+# Discord AI Chatbot 
 #### An Intelligent Discord AI Assistant with Personality!
 
 Created and maintained by **Tommy** - A powerful Discord bot that brings AI conversation to your server with multiple personalities and advanced features.
 
-## 🌟 Key Features
+## Key Features
 
-- **🎭 Multiple AI Personalities**: Choose from Albert Einstein, Luna, Ivan, or create your own custom personas
-- **⚡ Smart Response System**: Priority-based message handling prevents duplicate responses
-- **🔧 Interactive Launcher**: Easy persona selection with PowerShell/Batch launchers
-- **🌐 Multi-language Support**: 16+ languages supported including English, Vietnamese, Chinese, and more
-- **🔍 Image Analysis**: Advanced image recognition and analysis capabilities
-- **🧠 Context Awareness**: Maintains conversation history for coherent discussions
-- **⚙️ Hybrid Commands**: Both slash commands and natural language processing
-- **🔒 Secure Configuration**: Environment variables for API keys and tokens
-- **📊 MCP Integration**: Model Context Protocol support for extended capabilities
-- **🎯 Channel Management**: Per-channel activation/deactivation controls
+- **Multiple AI Personalities**: Choose from Albert Einstein, Luna, Ivan, or create your own custom personas
+- **Smart Response System**: Priority-based message handling prevents duplicate responses
+- **Interactive Launcher**: Easy persona selection with PowerShell/Batch launchers
+- **Multi-language Support**: 16+ languages supported including English, Vietnamese, Chinese, and more
+- **Image Analysis**: Advanced image recognition and analysis capabilities
+- **Context Awareness**: Maintains conversation history for coherent discussions
+- **Hybrid Commands**: Both slash commands and natural language processing
+- **Secure Configuration**: Environment variables for API keys and tokens
+- **MCP Integration**: Model Context Protocol support for extended capabilities
+- **Channel Management**: Per-channel activation/deactivation controls
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Python 3.10 or higher
@@ -63,15 +63,7 @@ Created and maintained by **Tommy** - A powerful Discord bot that brings AI conv
    python main.py
    ```
 
-### 🎭 Available Personas
-
-- **Albert Einstein** - The famous theoretical physicist persona
-- **Albert Einstein 2025** - Modern casual Einstein with contemporary knowledge
-- **Luna** - Caring and empathetic friend for meaningful conversations
-- **Ivan** - Direct and concise responses, perfect for quick interactions
-- **assist** - Default helpful assistant without specific personality
-
-## 🛠️ Configuration
+## Configuration
 
 ### Language Support
 Set your preferred language in `config.yml`:
@@ -127,7 +119,7 @@ This bot includes Google Cloud Text-to-Speech with **4 million free characters/m
 **For Replit/Cloud:**
 1. Open the JSON file in a text editor
 2. Copy the entire JSON content
-3. Add to Secrets (🔒):
+3. Add to Secrets :
    - **Key:** `GOOGLE_CLOUD_CREDENTIALS_JSON`
    - **Value:** Paste the entire JSON content (as one line)
 
@@ -186,7 +178,7 @@ MCP_ENABLED: true          # Model Context Protocol features
 | `/mcp-tools` | Show available MCP tools | `/mcp-tools` |
 | `/mcp-test` | Test MCP functionality | `/mcp-test` |
 
-## 🎮 Usage Examples
+## Usage Examples
 
 ### Basic Conversation
 ```
@@ -206,7 +198,7 @@ User: Can you explain relativity?
 Einstein Bot: Ah, relativity! It's quite fascinating actually. Imagine you're on a train...
 ```
 
-## � Development Features
+## Development Features
 
 ### Duplicate Response Prevention
 - Priority-based trigger system prevents multiple responses
@@ -224,7 +216,7 @@ Einstein Bot: Ah, relativity! It's quite fascinating actually. Imagine you're on
 - Code analysis tools
 - System information gathering
 
-## 🐳 Docker Support
+## Docker Support
 
 ### Using Docker Compose
 1. Ensure you have your `.env` file configured
@@ -242,7 +234,7 @@ docker build -t discord-ai-chatbot .
 docker run -d --env-file .env discord-ai-chatbot
 ```
 
-## ☁️ Free 24/7 Hosting on Replit
+## Free 24/7 Hosting on Replit
 
 ### Setup Guide (No Credit Card Required!)
 
@@ -256,7 +248,7 @@ docker run -d --env-file .env discord-ai-chatbot
 
 #### Step 2: Configure Secrets (Environment Variables)
 
-1. In your Repl, click the **🔒 Lock icon** (Secrets) in the left sidebar
+1. In your Repl, click the **Lock icon** (Secrets) in the left sidebar
 2. Add these secrets:
    - **Key:** `DISCORD_TOKEN` → **Value:** `your_discord_bot_token`
    - **Key:** `API_KEY` → **Value:** `your_groq_api_key`
@@ -289,7 +281,7 @@ Replit free tier sleeps after inactivity. Use UptimeRobot to keep it awake:
    - **Monitoring Interval:** 5 minutes
 4. Click **"Create Monitor"**
 
-Your bot will now stay online 24/7! 🚀
+Your bot will now stay online 24/7! 
 
 ---
 
@@ -331,7 +323,7 @@ Your bot will now stay online 24/7! 🚀
 
 </details>
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature-name`
@@ -339,18 +331,18 @@ Your bot will now stay online 24/7! 🚀
 4. Push to the branch: `git push origin feature-name`
 5. Submit a pull request
 
-## 📝 License
+## License
 
 This project is licensed under the GNU Affero General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
 
-## 🛠️ Support
+## Support
 
 If you encounter any issues or have questions:
 1. Check the [Issues](../../issues) page
 2. Create a new issue if your problem isn't already reported
 3. Provide detailed information about your setup and the issue
 
-## ⭐ Acknowledgments
+## Acknowledgments
 
 - Thanks to the open-source community for inspiration and tools
 - Groq for providing the AI API
@@ -358,4 +350,4 @@ If you encounter any issues or have questions:
 
 ---
 
-**Created with ❤️ by Tommy** | 
+**Created with love by Tommy** | 
