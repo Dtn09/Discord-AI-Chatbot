@@ -3,7 +3,7 @@
 
 Created and maintained by **Tommy** - A powerful Discord bot that brings AI conversation to your server with multiple personalities and advanced features.
 
-## Key Features
+## Features
 
 - **Multiple AI Personalities**: Choose from Albert Einstein, Luna, Ivan, or create your own custom personas
 - **Smart Response System**: Priority-based message handling prevents duplicate responses
