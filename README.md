@@ -350,4 +350,4 @@ If you encounter any issues or have questions:
 
 ---
 
-**Created with love by Tommy** | 
+**Created with love by Tommy** 
