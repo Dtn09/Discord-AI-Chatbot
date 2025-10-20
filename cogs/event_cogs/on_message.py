@@ -1,11 +1,15 @@
 import discord
 from discord.ext import commands
+import io
 
 from bot_utilities.response_utils import split_response
 from bot_utilities.ai_utils import generate_response, analyze_image
 from bot_utilities.simple_mcp import enhance_message_with_mcp
 from bot_utilities.mcp_utils import generate_response_with_mcp
 from bot_utilities.config_loader import config, load_active_channels
+from bot_utilities.tts_utils import tts_manager, VOICE_PRESETS
+from bot_utilities.tts_usage_tracker import usage_tracker
+from bot_utilities.smart_tts_detector import smart_tts_detector
 from ..common import allow_dm, trigger_words, replied_messages, smart_mention, message_history,  MAX_HISTORY, instructions
 
 
@@ -111,9 +115,64 @@ class OnMessage(commands.Cog):
 
     async def send_response(self, message, response):
         if response is not None:
-            for chunk in split_response(response):
+            # Check if auto-TTS should be used
+            should_tts, reason = smart_tts_detector.should_use_tts(
+                message.content,
+                response,
+                message.channel.id
+            )
+            
+            tts_file = None
+            if should_tts and tts_manager.client and config.get('TTS_ENABLED', True):
+                # Get default voice config
+                voice_config = VOICE_PRESETS.get("default", VOICE_PRESETS["default"])
+                is_wavenet = voice_config.get("is_wavenet", True)
+                
+                # Check if within usage limits
+                can_use, limit_reason = usage_tracker.can_use_tts(response, is_wavenet)
+                
+                if can_use:
+                    try:
+                        # Generate TTS for the first chunk only (to keep it reasonable)
+                        chunks = list(split_response(response))
+                        first_chunk = chunks[0] if chunks else response
+                        
+                        # Generate TTS audio
+                        audio_content = tts_manager.text_to_speech(
+                            text=first_chunk[:500],  # Limit to 500 chars for auto-TTS
+                            language_code=voice_config["language_code"],
+                            voice_name=voice_config["voice_name"]
+                        )
+                        
+                        if audio_content:
+                            # Track usage
+                            usage_tracker.add_usage(first_chunk[:500], is_wavenet)
+                            
+                            # Create Discord file
+                            tts_file = discord.File(
+                                io.BytesIO(audio_content),
+                                filename="response.mp3"
+                            )
+                    except Exception as e:
+                        print(f"Auto-TTS Error: {e}")
+            
+            # Send response chunks
+            for idx, chunk in enumerate(split_response(response)):
                 try:
-                    await message.reply(chunk, allowed_mentions=discord.AllowedMentions.none(), suppress_embeds=True)
+                    # Attach TTS file to first message only
+                    if idx == 0 and tts_file:
+                        await message.reply(
+                            chunk,
+                            file=tts_file,
+                            allowed_mentions=discord.AllowedMentions.none(),
+                            suppress_embeds=True
+                        )
+                    else:
+                        await message.reply(
+                            chunk,
+                            allowed_mentions=discord.AllowedMentions.none(),
+                            suppress_embeds=True
+                        )
                 except Exception:
                     await message.channel.send("I apologize for any inconvenience caused. It seems that there was an error preventing the delivery of my message. Additionally, it appears that the message I was replying to has been deleted, which could be the reason for the issue. If you have any further questions or if there's anything else I can assist you with, please let me know and I'll be happy to help.")
         else:

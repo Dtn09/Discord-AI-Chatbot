@@ -9,6 +9,7 @@ from discord.ext import commands
 import io
 from bot_utilities.tts_utils import tts_manager, VOICE_PRESETS
 from bot_utilities.tts_usage_tracker import usage_tracker
+from bot_utilities.smart_tts_detector import smart_tts_detector
 
 
 class TTSCog(commands.Cog):
@@ -265,6 +266,41 @@ class TTSCog(commands.Cog):
         except Exception as e:
             await interaction.followup.send(f"❌ An error occurred: {str(e)}")
             print(f"TTS Custom Error: {e}")
+    
+    @app_commands.command(name="tts-auto", description="Toggle automatic TTS for bot responses in this channel")
+    async def tts_auto(self, interaction: discord.Interaction):
+        """Toggle automatic TTS generation for bot responses"""
+        
+        channel_id = interaction.channel.id
+        new_state = smart_tts_detector.toggle_channel(channel_id)
+        
+        embed = discord.Embed(
+            title="🤖 Auto-TTS Settings",
+            color=discord.Color.green() if new_state else discord.Color.red()
+        )
+        
+        if new_state:
+            embed.description = (
+                "✅ **Auto-TTS Enabled** for this channel!\n\n"
+                "The bot will now automatically add voice messages when:\n"
+                "• You ask questions (What, How, Why, etc.)\n"
+                "• You use words like 'read', 'speak', 'tell me'\n"
+                "• The response is conversational\n"
+                "• Response is short enough (under 500 characters)\n\n"
+                "Auto-TTS will **NOT** activate for:\n"
+                "• Code blocks or technical content\n"
+                "• Very long responses\n"
+                "• Lists or tables"
+            )
+        else:
+            embed.description = (
+                "❌ **Auto-TTS Disabled** for this channel.\n\n"
+                "The bot will only generate TTS when you use `/tts` commands."
+            )
+        
+        embed.set_footer(text=f"Channel: {interaction.channel.name}")
+        
+        await interaction.response.send_message(embed=embed, ephemeral=False)
 
 
 async def setup(bot):

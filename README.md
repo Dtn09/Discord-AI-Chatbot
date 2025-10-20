@@ -148,6 +148,30 @@ Run your bot and try:
 - WaveNet voices: **1 million characters/month** (better quality)
 - Standard voices: **4 million characters/month** (basic quality)
 
+#### Intelligent Auto-TTS
+The bot can automatically add voice messages to responses when appropriate!
+
+**How to Enable:**
+1. Use `/tts-auto` in any channel to toggle automatic TTS
+2. The bot will intelligently detect when to generate speech
+
+**Auto-TTS Activates When:**
+- You ask questions (What, How, Why, When, Where, etc.)
+- You use trigger words like "read", "speak", "tell me", "say", "explain"
+- The response is conversational and friendly
+- Response is concise (under 500 characters for voice quality)
+
+**Auto-TTS Automatically Skips:**
+- Code blocks or technical content with backticks
+- Very long responses (keeps voice messages manageable)
+- Lists, tables, or structured data
+- Messages with anti-trigger words like "don't read", "no audio"
+
+**Toggle Controls:**
+- `/tts-auto` - Enable/disable for current channel
+- Settings are per-channel (each channel has independent control)
+- Uses the default voice configured (German Chirp 3 HD Alnilam)
+
 #### TTS Commands
 - `/tts text voice` - Generate speech with voice presets
 - `/tts-voices` - List all available voices and view usage
@@ -174,6 +198,7 @@ MCP_ENABLED: true          # Model Context Protocol features
 | `/tts-voices` | List available TTS voice presets | `/tts-voices` |
 | `/tts-usage` | Check TTS usage statistics | `/tts-usage` |
 | `/tts-custom` | Custom TTS with speed/pitch control | `/tts-custom text:Hello language:en-US` |
+| `/tts-auto` | Toggle automatic TTS for bot responses | `/tts-auto` |
 | `/toggleactive` | Enable/disable bot in current channel | `/toggleactive` |
 | `/mcp-tools` | Show available MCP tools | `/mcp-tools` |
 | `/mcp-test` | Test MCP functionality | `/mcp-test` |
